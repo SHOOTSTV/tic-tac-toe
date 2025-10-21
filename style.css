@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Press Start 2P", cursive;
   font-size: 16px;
   color: #333;
   height: 100vh;
@@ -37,8 +37,50 @@ body {
   justify-content: center;
 }
 
+.cell:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
 .gameboard-container {
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+#message {
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+#reset-btn {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: "Press Start 2P", cursive;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+#reset-btn:hover {
+  background-color: #555;
+}
+
+#player-x,
+#player-o {
+  width: 150px;
+  height: 40px;
+  border: 1px solid #333;
+  padding: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: "Press Start 2P", cursive;
+  text-align: center;
 }
