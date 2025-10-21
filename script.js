@@ -30,6 +30,25 @@ const GameController = (() => {
   let currentPlayer = "X";
   let gameOver = false;
 
+  const playerNames = {
+    X: "",
+    O: "",
+  };
+
+  const setPlayerNames = () => {
+    const playerXInput = document.getElementById("player-x");
+    const playerOInput = document.getElementById("player-o");
+
+    const nameX = playerXInput.value.trim() || "Player X";
+    const nameO = playerOInput.value.trim() || "Player O";
+
+    playerNames.X = nameX;
+    playerNames.O = nameO;
+
+    playerXInput.value = nameX;
+    playerOInput.value = nameO;
+  };
+
   const switchPlayer = () => {
     currentPlayer = currentPlayer === "X" ? "O" : "X";
   };
@@ -69,6 +88,9 @@ const GameController = (() => {
   };
 
   const getCurrentPlayer = () => currentPlayer;
+  const getCurrentPlayerName = () => playerNames[currentPlayer];
+  const getPlayerNames = () => playerNames;
+
   const isGameOver = () => gameOver;
 
   return {
@@ -78,6 +100,9 @@ const GameController = (() => {
     resetGame,
     getCurrentPlayer,
     isGameOver,
+    setPlayerNames,
+    getCurrentPlayerName,
+    getPlayerNames,
   };
 })();
 
@@ -107,7 +132,7 @@ const DisplayController = (() => {
       renderBoard();
 
       if (GameController.checkWinner()) {
-        updateMessage(`Player ${GameController.getCurrentPlayer()} wins!`);
+        updateMessage(`${GameController.getCurrentPlayerName()} wins!`);
         return;
       }
 
@@ -117,13 +142,14 @@ const DisplayController = (() => {
       }
 
       GameController.switchPlayer();
-      updateMessage(`Player ${GameController.getCurrentPlayer()}'s turn`);
+      updateMessage(`${GameController.getCurrentPlayerName()}'s turn`);
     }
   };
 
   const resetGame = () => {
     GameController.resetGame();
-    updateMessage("Player X's turn");
+    GameController.setPlayerNames();
+    updateMessage(`${GameController.getCurrentPlayerName()}'s turn`);
     renderBoard();
   };
 
@@ -134,7 +160,22 @@ const DisplayController = (() => {
     });
 
     document.getElementById("reset-btn").addEventListener("click", resetGame);
-    updateMessage("Player X's turn");
+
+    const playerXInput = document.getElementById("player-x");
+    const playerOInput = document.getElementById("player-o");
+
+    playerXInput.addEventListener("input", () => {
+      GameController.setPlayerNames();
+      updateMessage(`${GameController.getCurrentPlayerName()}'s turn`);
+    });
+
+    playerOInput.addEventListener("input", () => {
+      GameController.setPlayerNames();
+      updateMessage(`${GameController.getCurrentPlayerName()}'s turn`);
+    });
+
+    GameController.setPlayerNames();
+    updateMessage(`${GameController.getCurrentPlayerName()}'s turn`);
     renderBoard();
   };
 
